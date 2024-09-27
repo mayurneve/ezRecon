@@ -25,11 +25,11 @@ AutoReconTool is a Bash-based automated reconnaissance tool that gathers informa
 1. Clone this repository:
    ```bash
    https://github.com/mayurneve/ezRecon.git
-- 2.Navigate into the tool directory
+2. Navigate into the tool directory
    `cd ezRecon`
-- 3.Make the script executable
+3. Make the script executable
    `chmod +x ezRecon.sh`
-- 4.Run the script
+4. Run the script
    `./ezRecon.sh <target-domain>`
 
    Example : ./ezRecon.sh instagram.com
