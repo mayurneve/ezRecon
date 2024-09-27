@@ -32,8 +32,7 @@ AutoReconTool is a Bash-based automated reconnaissance tool that gathers informa
 4. Run the script
    `./ezRecon.sh <target-domain>`
 
-   - Example :
-   - ./ezRecon.sh instagram.com
+   - Example :   ./ezRecon.sh instagram.com
 
 #Output:
 
