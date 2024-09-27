@@ -13,6 +13,9 @@ AutoReconTool is a Bash-based automated reconnaissance tool that gathers informa
 - Google Dorking
 
 ## Requirements:
+
+#- install the requirements with root privileges !
+
 - **Nmap**: `sudo apt install nmap`
 - **Whois**: `sudo apt install whois`
 - **DNS Utilities**: `sudo apt install dnsutils`
@@ -20,6 +23,7 @@ AutoReconTool is a Bash-based automated reconnaissance tool that gathers informa
 - **sslscan**: `sudo apt install sslscan`
 - **Sublist3r**: `pip3 install sublist3r`
 - **theHarvester**: `pip3 install theHarvester`
+
 
 ## Installation:
 1. Clone this repository:
