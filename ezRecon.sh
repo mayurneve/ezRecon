@@ -39,7 +39,7 @@ function subdomain_enum() {
 # Port Scanning (Nmap)
 function port_scan() {
     echo "[+] Performing Port Scan for $1"
-    nmap -A -sV -p- $1 > recon_results/nmap_scan.txt
+    nmap -sV -p- $1 > recon_results/nmap_scan.txt
 }
 
 # Web Technology Detection (WhatWeb)
