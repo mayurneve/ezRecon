@@ -35,13 +35,14 @@ AutoReconTool is a Bash-based automated reconnaissance tool that gathers informa
    Example : ./ezRecon.sh instagram.com
 
 #Output:
+
 The script outputs all results to a recon_results directory, which contains:
 
-whois.txt: Domain WHOIS information
-dns_records.txt: DNS records
-subdomains.txt: Enumerated subdomains
-nmap_scan.txt: Nmap port scan results
-web_tech.txt: Web technologies detected
-ssl_info.txt: SSL/TLS scan results
-harvester_results.txt: Email/user enumeration
-google_dorking.txt: Google Dorking URLs
+- whois.txt: Domain WHOIS information
+- dns_records.txt: DNS records
+- subdomains.txt: Enumerated subdomains
+- nmap_scan.txt: Nmap port scan results
+- web_tech.txt: Web technologies detected
+- ssl_info.txt: SSL/TLS scan results
+- harvester_results.txt: Email/user enumeration
+- google_dorking.txt: Google Dorking URLs
