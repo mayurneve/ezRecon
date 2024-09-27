@@ -24,7 +24,7 @@ AutoReconTool is a Bash-based automated reconnaissance tool that gathers informa
 ## Installation:
 1. Clone this repository:
    ```bash
-   https://github.com/mayurneve/ezRecon.git
+   git clone https://github.com/mayurneve/ezRecon.git
 2. Navigate into the tool directory
    `cd ezRecon`
 3. Make the script executable
