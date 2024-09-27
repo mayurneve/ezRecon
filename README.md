@@ -12,7 +12,8 @@ AutoReconTool is a Bash-based automated reconnaissance tool that gathers informa
 - Email/Username Enumeration (theHarvester)
 - Google Dorking
 
-![image](https://github.com/user-attachments/assets/e1dd4110-d185-4ba1-b429-4a1a26020c93)
+![image](https://github.com/user-attachments/assets/fe225334-d7d2-470e-b225-7f6e681e3e6a)
+
 
 ## Requirements:
 
