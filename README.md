@@ -5,12 +5,12 @@ AutoReconTool is a Bash-based automated reconnaissance tool that gathers informa
 ## Features:
 - Domain WHOIS Information
 - DNS Record Enumeration
-- Subdomain Enumeration (Sublist3r)
+- Subdomain Enumeration (Subfinder)
 - Port Scanning (Nmap)
 - Web Technology Detection (WhatWeb)
 - SSL/TLS Information (sslscan)
 - Email/Username Enumeration (theHarvester)
-- Google Dorking
+
 
 ![image](https://github.com/user-attachments/assets/fe225334-d7d2-470e-b225-7f6e681e3e6a)
 
@@ -43,7 +43,7 @@ AutoReconTool is a Bash-based automated reconnaissance tool that gathers informa
 
 #Output:
 
-The script outputs all results to a recon_results directory, which contains:
+The script outputs all results to a recon_results <Domain Name> directory, which contains:
 
 - whois.txt: Domain WHOIS information
 - dns_records.txt: DNS records
@@ -52,4 +52,4 @@ The script outputs all results to a recon_results directory, which contains:
 - web_tech.txt: Web technologies detected
 - ssl_info.txt: SSL/TLS scan results
 - harvester_results.txt: Email/user enumeration
-- google_dorking.txt: Google Dorking URLs
+
