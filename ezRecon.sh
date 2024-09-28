@@ -1,108 +1,71 @@
 #!/bin/bash
 
+#ezRecon tool
+
 # Automated Reconnaissance Tool
+# This tool performs DNS lookup, subdomain enumeration (via subfinder), port scanning, WHOIS lookup, and web server info gathering, SSL/TLS information, email & username information 
 
-# Ensure required tools are installed
-function check_tools() {
-    tools=("whois" "dig" "nmap" "whatweb" "sslscan" "sublist3r" "theharvester")
-    for tool in "${tools[@]}"; do
-        if ! command -v $tool &> /dev/null; then
-            echo "Error: $tool is not installed. Install it before running the script."
-            exit 1
-        fi
-    done
-}
+# Checking if domain is provided as an argument
 
-# Domain Information (Whois)
-function domain_info() {
-    echo "[+] Gathering Whois Information for $1"
-    whois $1 > recon_results/whois.txt
-}
+if [ -z "$1" ]; then
+  echo "Usage: $0 <domain>"
+  exit 1
+fi
 
-# DNS Records Information (A, MX, NS, etc.)
-function dns_info() {
-    echo "[+] Gathering DNS Records for $1"
-    dig $1 +noall +answer > recon_results/dns_records.txt
-}
+DOMAIN=$1
 
-# Subdomain Enumeration (Sublist3r)
-function subdomain_enum() {
-    echo "[+] Enumerating Subdomains for $1"
-    python3 sublist3r.py -d $1 -o recon_results/subdomains.txt
-}
+# Create a directory for saving the results
+mkdir -p recon_results_$DOMAIN
+cd recon_results_$DOMAIN
 
-# Subdomain Enumeration (Sublist3r)
-function subdomain_enum() {
-    echo "[+] Enumerating Subdomains for $1"
-    sublist3r -d $1 -o recon_results/subdomains.txt
-}
-# Port Scanning (Nmap)
-function port_scan() {
-    echo "[+] Performing Port Scan for $1"
-    nmap -sV -p- $1 > recon_results/nmap_scan.txt
-}
+# Step 1: WHOIS Lookup
+echo "[*] Running WHOIS lookup for $DOMAIN..."
+whois $DOMAIN > whois.txt
+echo "[*] WHOIS lookup completed and saved to whois.txt"
 
-# Web Technology Detection (WhatWeb)
-function web_tech() {
-    echo "[+] Detecting Web Technologies on $1"
-    whatweb $1 > recon_results/web_tech.txt
-}
+# Step 2: DNS Lookup
+echo "[*] Performing DNS lookup for $DOMAIN..."
+dig $DOMAIN +noall +answer > dns.txt
+echo "[*] DNS lookup completed and saved to dns.txt"
 
-# SSL/TLS Information (sslscan)
-function ssl_info() {
-    echo "[+] Gathering SSL/TLS Information for $1"
-    sslscan $1 > recon_results/ssl_info.txt
-}
+# Step 3: Subdomain Enumeration using Subfinder
+echo "[*] Enumerating subdomains using Subfinder for $DOMAIN..."
+subfinder -d $DOMAIN -silent -o subfinder_subdomains.txt
+echo "[*] Subdomain enumeration completed and saved to subfinder_subdomains.txt"
 
-# Harvest Email/Username Enumeration (theHarvester)
-function email_enum() {
-    echo "[+] Enumerating Emails and Usernames for $1"
-    theHarvester -d $1 -l 500 -b all > recon_results/harvester_results.txt
-}
+# Step 4: Port Scanning using Nmap
+echo "[*] Scanning for open ports on $DOMAIN..."
+nmap -Pn -sS -T4 $DOMAIN > ports.txt
+echo "[*] Nmap port scanning completed and saved to ports.txt"
+
+# Step 5: Web Server Information using curl
+echo "[*] Fetching web server headers for $DOMAIN..."
+curl -I $DOMAIN > server_headers.txt
+echo "[*] Web server headers saved to server_headers.txt"
+
+# Step 6: SSL/TLS Information (sslscan)
+echo "[*] Gathering SSL/TLS Information for $DOMAIN..."
+sslscan $DOMAIN > ssl_info.txt
+echo "[*] SSL/TLS Information saved in ssl_info.txt"
+
+# Step 7: Harvest Email/Username Enumeration (theHarvester)
+echo "[*] Enumerating Emails and Usernames for $DOMAIN..."
+theHarvester -d $DOMAIN -l 500 -b all > harvester.txt
+echo "[*] Emails and Usernames saved in harvester.txt"
+
+# Step 8: Web Technology Finding (Whatweb)
+echo "[*] Finding Web Technology for $DOMAIN..."
+whatweb $DOMAIN> web_tech.txt
+echo "[*] Web Techonolgies saved in web_tech.txt"
 
 
-# Google Dorking Example
-function google_dorking() {
-    echo "[+] Performing Google Dorking for $1"
-    echo "Results may vary due to Google's CAPTCHA or rate-limiting"
-    search_queries=("site:$1 admin" "site:$1 login" "site:$1 inurl:/wp-admin" "site:$1 inurl:/admin")
-    for query in "${search_queries[@]}"; do
-        echo "Dorking with: $query"
-        echo "https://www.google.com/search?q=$query" >> recon_results/google_dorking.txt
-    done
-}
-
-# Create results directory
-function setup_env() {
-    mkdir -p recon_results
-    echo "Created directory for results: recon_results"
-}
-
-# Main Execution Function
-function run_recon() {
-    target=$1
-
-    # Check if target domain is provided
-    if [ -z "$target" ]; then
-        echo "Usage: $0 <target-domain>"
-        exit 1
-    fi
-
-    setup_env
-    domain_info $target
-    dns_info $target
-    subdomain_enum $target
-    port_scan $target
-    web_tech $target
-    ssl_info $target
-    email_enum $target
-    google_dorking $target
-
-    echo "[+] Reconnaissance Completed. Results saved in the recon_results/ directory."
-}
-
-# Check for required tools
-check_tools
-
-# Run the reconnaissance with target domain as input
-run_recon $1
+# Summary of actions
+echo "[*] Reconnaissance completed for $DOMAIN. Results saved in recon_results_$DOMAIN directory."
+echo "   - WHOIS information (WHOIS): whois.txt"
+echo "   - DNS lookup results (dig): dns.txt"
+echo "   - Subdomain enumeration (Subfinder): subfinder_subdomains.txt"
+echo "   - Open ports (Nmap scan): ports.txt"
+echo "   - Web server headers (cURL): server_headers.txt"
+echo "   - SSL/TLS Informations (sslscan): ssl_info.txt"
+echo "   - Emails & usernames results (theHarvester): harvester.txt"
+echo "	 - Web Technology results (whatweb): web_tech.txt"
